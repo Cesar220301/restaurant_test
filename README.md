@@ -1,16 +1,21 @@
-# React + Vite
+# Prueba tecnica
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto corresponde a una prueba tecnica.
 
-Currently, two official plugins are available:
+## Consumo de datos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Para el consumo de la data se opto por usar una API en Google App Script como proxy para poder consultar `https://recruiting-datasets.s3.us-east-2.amazonaws.com/data_melp.json` en localhost.
 
-## React Compiler
+Dentro del App Script solo se tiene lo siguiente:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```js
+function doGet() {
+  const url = "https://recruiting-datasets.s3.us-east-2.amazonaws.com/data_melp.json";
+  const res = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+  const jsonText = res.getContentText();
+  return ContentService
+    .createTextOutput(jsonText)
+    .setMimeType(ContentService.MimeType.JSON);
+}
+```
