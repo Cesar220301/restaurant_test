@@ -3,7 +3,7 @@ import { NavButton } from "./NavButton";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 
 export function NavDesktop({mapIcon,listIcon}){
-  return <AppBar component="nav" color="transparent" elevation={1} >
+  return <AppBar component="nav" sx={{background: "#fff",color:"#000"}} elevation={1} >
             <Toolbar>
               <Typography variant="h6">
                 <RestaurantMenuIcon color="primary"/>
