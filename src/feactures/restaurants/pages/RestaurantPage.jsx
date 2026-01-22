@@ -1,21 +1,15 @@
 import { useMemo, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { fetchRestaurants } from "../api/restaurants.api"
-import { Alert, Box, CircularProgress, FormControl, InputLabel, MenuItem, Pagination, Select, Stack } from "@mui/material"
-import { CardRestaurant } from "../components/CardRestaurant"
-const size_max = 6
+import { Alert, Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, Stack } from "@mui/material"
+import { RestaurantTable } from "../components/RestaurantTable"
 export function RestaurantPage() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['restaurants'],
     queryFn: () => fetchRestaurants(),
     refetchOnWindowFocus: false,
   })
-  const [page, setPage] = useState(1)
-  const [sortOrder, setSortOrder] = useState("name-asc")
-  const pageCount = useMemo(() => {
-    if (!data?.length) return 0
-    return Math.ceil(data.length / size_max)
-  }, [data])
+  const [sortOrder, setSortOrder] = useState("rating-desc")
 
   const restaurants = useMemo(() => {
     if (!data?.length) return []
@@ -31,9 +25,8 @@ export function RestaurantPage() {
       if (nameA > nameB) return sortOrder === "name-asc" ? 1 : -1
       return 0
     })
-    const startIndex = (page - 1) * size_max
-    return sorted.slice(startIndex, startIndex + size_max)
-  }, [data, page, sortOrder])
+    return sorted
+  }, [data, sortOrder])
   if (isLoading) {
     return <Stack justifyContent="center" alignItems="center" sx={{ mt: 4 }}>
       <CircularProgress></CircularProgress>
@@ -45,16 +38,13 @@ export function RestaurantPage() {
     </Box>
   }
 
-  return <Stack spacing={2} sx={{mt:2}}>
+  return <Stack spacing={2} sx={{ mt: 2 }}>
     <FormControl size="small">
-      <InputLabel>Ordenar por</InputLabel>
+      <InputLabel>Ordenar</InputLabel>
       <Select
         value={sortOrder}
         label="Ordenar"
-        onChange={(event) => {
-          setSortOrder(event.target.value)
-          setPage(1)
-        }}
+        onChange={(event) => setSortOrder(event.target.value)}
       >
         <MenuItem value="name-asc">Ascendente</MenuItem>
         <MenuItem value="name-desc">Descendente</MenuItem>
@@ -62,31 +52,6 @@ export function RestaurantPage() {
         <MenuItem value="rating-asc">Peor rating</MenuItem>
       </Select>
     </FormControl>
-    {pageCount > 1 && (
-      <Stack direction="row" justifyContent="center">
-        <Pagination
-          count={pageCount}
-          page={page}
-          onChange={(_, value) => setPage(value)}
-          shape="rounded"
-        />
-      </Stack>
-    )}
-    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2,justifyContent: "space-around" }}>
-      {
-        restaurants.map(r => {
-          const address = r.address?.state + " - " + r.address?.city
-          return <CardRestaurant
-            key={r.id}
-            name={r.name}
-            phone={r.contact?.phone}
-            address={address}
-            site={r.contact?.site}
-            rating={r.rating}
-          />
-        })
-      }
-    </Box>
-
+    <RestaurantTable restaurants={restaurants} />
   </Stack>
 }

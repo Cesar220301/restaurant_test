@@ -19,28 +19,37 @@ import { NavMobile } from "./components/NavMobile";
 
 import MapIcon from "@mui/icons-material/Map";
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
-
+import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 export function MenuLayout() {
   const [view, setView] = useState("list")
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
-    <Box sx={isMobile ? { pb: 8 } : { pt: 8 }}>
+    <Box sx={isMobile ? { pb: 8, pt: 8  } : { pt: 8 }}>
+      <AppBar component="nav" sx={{ background: "#fff", color: "#000" }} elevation={1} >
+        <Toolbar>
+          <Typography variant="h6">
+            <RestaurantMenuIcon color="primary" />
+            <strong>Restaurantes</strong>
+          </Typography>
+          {
+            !isMobile &&
+            <NavDesktop
+              listIcon={<FormatListBulletedOutlinedIcon />}
+              mapIcon={<MapIcon />}
+            />
+          }
+        </Toolbar>
+      </AppBar>
       {
-        isMobile ?
+        isMobile &&
 
-          <NavMobile
-            view={view}
-            setView={setView}
-            listIcon={<FormatListBulletedOutlinedIcon/>}
-            mapIcon={<MapIcon/>}
-          ></NavMobile>
-
-          :
-          <NavDesktop
-            listIcon={<FormatListBulletedOutlinedIcon/>}
-            mapIcon={<MapIcon/>}
-          />
+        <NavMobile
+          view={view}
+          setView={setView}
+          listIcon={<FormatListBulletedOutlinedIcon />}
+          mapIcon={<MapIcon />}
+        ></NavMobile>
       }
       <Container component="main">
         <Outlet />
