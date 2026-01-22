@@ -9,7 +9,7 @@ export function NavMobile({view,setView,mapIcon,listIcon}){
               sx={{background: "#fff" }}
             >
               <BottomNavigationAction
-                label="Restaurantes"
+                label="Lista"
                 value="list"
                 icon={listIcon}
                 component={NavLink}
