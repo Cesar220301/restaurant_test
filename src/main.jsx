@@ -8,9 +8,9 @@ import { QueryProvider } from './app/providers/QueryProvider';
 
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
     <QueryProvider>
       <RouterProvider router={router} />
     </QueryProvider>
-  </StrictMode>,
+  // </StrictMode>,
 )
