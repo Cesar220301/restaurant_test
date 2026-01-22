@@ -1,13 +1,12 @@
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
-import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
-import MapIcon from "@mui/icons-material/Map";
 import { NavLink } from "react-router-dom";
 export function NavMobile({view,setView,mapIcon,listIcon}){
-  return <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+  return <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex:100}} elevation={3}>
             <BottomNavigation
               value={view}
               onChange={(_, value) => setView(value)}
               showLabels
+              sx={{background: "#fff" }}
             >
               <BottomNavigationAction
                 label="Restaurantes"

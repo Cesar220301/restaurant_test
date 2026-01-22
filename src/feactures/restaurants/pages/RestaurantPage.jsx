@@ -28,7 +28,7 @@ export function RestaurantPage() {
           phone={r.contact?.phone}
           address={address}
           site={r.contact?.site}
-
+          rating={r.rating}
         />
       })
     }

@@ -2,11 +2,11 @@ import { Box, Card, Divider, Link, Rating, Stack, Typography } from "@mui/materi
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
-export function CardRestaurant({name,address,phone,site}) {
+export function CardRestaurant({name,address,phone,site,rating}) {
   return (
     <Card sx={{ width: 275, p: 2 }}>
       <Typography variant="subtitle1">{name}</Typography>
-      <Rating value={3} readOnly></Rating>
+      <Rating value={rating} readOnly></Rating>
       <Divider sx={{my:2}}></Divider>
       <Stack spacing={1}>
         <Stack direction="row" spacing={1} alignItems="flex-start">
