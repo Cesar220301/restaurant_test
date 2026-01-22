@@ -1,14 +1,9 @@
 import { useMemo, useState } from "react"
-import { useQuery } from "@tanstack/react-query"
-import { fetchRestaurants } from "../api/restaurants.api"
+import { useRestaurants } from "../hooks/useRestaurants"
 import { Alert, Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, Stack } from "@mui/material"
 import { RestaurantTable } from "../components/RestaurantTable"
 export function RestaurantPage() {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['restaurants'],
-    queryFn: () => fetchRestaurants(),
-    refetchOnWindowFocus: false,
-  })
+  const { data, isLoading, isError } = useRestaurants()
   const [sortOrder, setSortOrder] = useState("rating-desc")
 
   const restaurants = useMemo(() => {
